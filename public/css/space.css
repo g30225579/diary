@@ -1,0 +1,44 @@
+table{border-collapse:collapse;border-spacing:0}
+abbr,acronym,fieldset,img{border:0}
+ol,ul{list-style:none}
+caption,th{text-align:left}
+.dn{display:none}
+.ovh{overflow:hidden}
+.vh{visibility:hidden}
+.vv{visibility:visible}
+a{cursor:pointer}
+img{max-width:100%}
+.pre_txt{font-style: normal;white-space: pre-wrap;word-wrap: break-word;word-break: break-all;}
+body{max-width:1200px;margin:0 auto}
+/* header头部 */
+.header{margin:1rem .6rem}
+.header .layui-row{display:flex;align-items:center}
+.header .layui-breadcrumb{display:inline-flex;justify-content: left;align-items: center}
+.header .name{text-align: right;display: inline-flex;justify-content: flex-end;align-items: center;}
+.header .name .layui-icon-logout{margin-left:.3rem}
+/* diary home/list */
+.diary_home_list .pagination{display:flex;justify-content:flex-end;margin-right:2rem}
+.diary_home_list .layui-timeline{margin-right:1.6rem;}
+.diary_home_list .layui-timeline-title{font-size:1rem}
+.diary_home_list .sub_title{margin-bottom:.3rem;color:#aaa;display:flex;justify-content:space-between;align-items:center}
+.diary_home_list .content{color:#333}
+.diary_home_list .item_foot{margin:.4rem 0}
+.diary_home_list .main_right .layui-bg-gray{padding:1.2rem}
+.diary_home_list .layui-tree-entry{height:auto}
+/* diary view */
+.diary_view{margin:0 .4rem;}
+.diary_view .title{font-size:1.2rem;margin:2rem 0 1rem;}
+.diary_view .sub_title{justify-content:flex-start}
+.diary_view .layui-panel{margin-top:.8rem}
+.diary_view .content{padding:1rem;font-size:.9rem;}
+.diary_view .content p{margin:revert}
+.diary_view .diary_view_other{padding:1rem .6rem;display:flex;justify-content:space-between;flex-wrap:wrap}
+.diary_view .diary_view_other div{display:inline;}
+.diary_view .diary_view_other a{color:#01AAED}
+/* diary edit */
+.diary_edit form{padding:1rem}
+@media only screen and (min-width:960px){
+    .diary_edit form{margin-top:1.6rem;}
+}
+/* footer底部 */
+.footer{height:2rem;display: block}

@@ -1,2 +1,2 @@
-# diary
-Diary &amp; Blog base on laravel
+# diary_blog
+diary、blog base on laravel
