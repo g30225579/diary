@@ -2,13 +2,16 @@
 
 ## Features
 * 根据日期归类
-* 编辑器TinyMce（支持将图片上传至阿里云OSS，支持图片压缩）
-* 支持设置二级密码
+* 二级密码保护
+* TinyMce编辑器
+  * 图片上传自动裁减压缩
+  * 上传到指定的云存储(TODO...)
 
 ## Install
 * 下载代码
 * composer install
 * example.env 修改为 .env，根据提示修改配置
 
-## Example
-![Image text](https://raw.githubusercontent.com/g30225579/diary/main/files/preview.png)
+## 待完善
+* 图片上传去掉回调，上传前通过js简单压缩即可，简化逻辑
+* 支持除图片外的多媒体文件上传，如：音频，视频
