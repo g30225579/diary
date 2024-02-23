@@ -10,7 +10,7 @@
         "fideloper/proxy": "^4.0",
         "intervention/image": "^2.5",
         "jenssegers/agent": "^2.6",
-        "laravel/framework": "5.7.*",
+        "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
         "ourcodeworld/php-pngquant": "^1.0",
         "tinify/tinify": "^1.5"

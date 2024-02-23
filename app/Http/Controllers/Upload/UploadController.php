@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 class UploadController extends Controller
 {
     const OSS_UPLOADED_KEY = 'oss_uploaded';
-    const OSS_UPLOADED_EXPIRE = 1440*7; //单位是分钟
+    const OSS_UPLOADED_EXPIRE = 86400*7; //单位是秒
 
     /**
      * 获取OSS上传签名
