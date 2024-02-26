@@ -13,11 +13,28 @@
 <div class="header">
     <div class="layui-fluid">
         <div class="layui-row">
-            <div class="layui-col-xs8">
+            <div class="layui-col-xs4">
                 <span class="layui-breadcrumb" lay-separator="|">
                     <a href="/space">Home</a>
                     <a href="/space/diary/create"><button class="layui-btn layui-btn-primary layui-border-red layui-btn-xs"><i class="layui-icon layui-icon-addition"></i>写记事</button></a>
                 </span>
+            </div>
+            <div class="layui-col-xs4">
+                <form class="layui-form" action="/space">
+                    <div class="layui-inline" style="width:80px">
+                        <select name="keyword_type">
+                            <option value="">全部</option>
+                            <option value="1" @if(request()->input('keyword_type')==1) selected @endif>标题</option>
+                            <option value="2" @if(request()->input('keyword_type')==2) selected @endif>内容</option>
+                        </select>
+                    </div>
+                    <div class="layui-inline">
+                        <input type="text" name="keyword" value="{{request()->input('keyword')}}" lay-verify="required" placeholder="关键词" autocomplete="off" class="layui-input" />
+                    </div>
+                    <div class="layui-inline">
+                        <button class="layui-btn" type="submit"><i class="layui-icon layui-icon-search"></i></button>
+                    </div>
+                </form>
             </div>
             <div class="layui-col-xs4 name">
                 <b>{{auth()->user()->name}}</b>

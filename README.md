@@ -1,7 +1,9 @@
 # Diary & Blog base on Laravel
 
 ## Features
+* 移动端自适应
 * 根据日期归类
+* 标题/内容搜索
 * 二级密码保护
 * TinyMce编辑器
   * 图片上传自动裁减压缩

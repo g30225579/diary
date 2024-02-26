@@ -16,6 +16,9 @@ class DiaryController extends Controller
     public function index()
     {
         $date = request()->input('date');
+        $keywordType = request()->input('keyword_type');
+        $keyword = request()->input('keyword');
+
         $nowYear = date('Y');
 
         //记事列表
@@ -23,8 +26,20 @@ class DiaryController extends Controller
 
         $tree = $this->getTreeData($builder);
 
+        //日期
         if($date){
             $builder->where(DB::raw("from_unixtime(create_time,'%Y-%m')"), $date);
+        }
+        //搜索
+        if($keyword){
+            $builder->where(function(Builder $query) use($keywordType,$keyword){
+                if(!$keywordType || $keywordType==1){ //标题
+                    $query->orWhere('title', 'like', '%'.$keyword.'%');
+                }
+                if(!$keywordType || $keywordType == 2){ //内容
+                    $query->orWhere('content', 'like', '%'.$keyword.'%');
+                }
+            });
         }
 
         $pageList = $builder->orderByDesc('create_time')->paginate(20);
