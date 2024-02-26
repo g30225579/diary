@@ -25,6 +25,17 @@
             </div>
             <div class="layui-col-xs12 layui-col-md3 main_right">
                 <div class="layui-bg-gray">
+                    <form class="layui-form" action="/space" style="display:flex;margin-bottom:1rem;">
+                        <div class="layui-inline" style="width:100px">
+                            <select name="keyword_type">
+                                <option value="">全部</option>
+                                <option value="1" @if(request()->input('keyword_type')==1) selected @endif>标题</option>
+                                <option value="2" @if(request()->input('keyword_type')==2) selected @endif>内容</option>
+                            </select>
+                        </div>
+                        <input type="text" name="keyword" value="{{request()->input('keyword')}}" lay-verify="required" placeholder="关键词" autocomplete="off" class="layui-input" />
+                        <input type="submit" style="display:none" />
+                    </form>
                     <div class="layui-card">
                         <div class="layui-card-header">归档</div>
                         <div class="layui-card-body">
