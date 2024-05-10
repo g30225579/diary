@@ -52,22 +52,33 @@
         isMobile = {{checkMobile() ? 1 : 0}};
 
         layui.use('laypage', function(){
-            var laypage = layui.laypage;
+            let params = getUrlParams();
+            let url = window.location.pathname + '?';
+            let queryString = '';
+            for(const k in params){
+                if(k === 'page') continue;
+                let value = params[k] !== undefined ? params[k] : '';
+                queryString += `&${k}=${value}`;
+            }
 
-            //执行一个laypage实例
+            let laypage = layui.laypage;
+            let page = {{$pageList->currentPage()}};
+
             let layout = ['count', 'prev', 'page', 'next'];
             if(isMobile){
                 layout = ['count', 'prev', 'next'];
             }
             var pageParams = {
                 count: {{$pageList->total()}},
-                curr: {{$pageList->currentPage()}},
+                curr: page,
                 limit: {{$pageList->perPage()}},
                 layout: layout,
                 jump: function(obj, first){
-                    if(!first){
-                        window.location = '/space?page=' + obj.curr;
-                    }
+                    if(first) return;
+                    if(page === obj.curr) return;
+
+                    queryString += '&page=' + obj.curr;
+                    window.location = url + queryString.substring(1);
                 }
             }
             document.querySelectorAll('.pagination').forEach(function(obj){

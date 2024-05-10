@@ -203,3 +203,14 @@ function getFileMD5(file){
         fileReader.readAsBinaryString(file);
     });
 }
+
+function getUrlParams(){
+    var queryString = window.location.search.substring(1);
+    var paramArr = queryString == '' ? [] : queryString.split('&');
+    var params = {};
+    for(var i=0; i<paramArr.length; i++){
+        var pair = paramArr[i].split("=");
+        params[pair[0]] = pair[1];
+    }
+    return params;
+}
