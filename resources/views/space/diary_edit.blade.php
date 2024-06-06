@@ -28,7 +28,7 @@
 @endsection
 @section('script')
     <script src="/static/lib/tinymce/tinymce.min.js"></script>
-    <script src="/npm/spark-md5@3.0.1/spark-md5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/spark-md5@3.0.2/spark-md5.min.js"></script>
     <script>
         bucketUrl = '{{\App\Helpers\Aliyun\AliyunOss::getBucketUrl()}}';
 

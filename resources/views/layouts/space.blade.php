@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', '家园')</title>
-    <link rel="stylesheet" href="/npm/layui@2.6.8/dist/css/layui.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui@2.9.11/dist/css/layui.min.css">
     <link rel="stylesheet" href="/css/space.css">
     @yield('style')
 </head>
@@ -35,7 +35,7 @@
 </div>
 <div class="footer"></div>
 </body>
-<script src="/npm/layui@2.6.8/dist/layui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/layui@2.9.11/dist/layui.min.js"></script>
 <script>
     window.$ = layui.$;
     $.ajaxSetup({
