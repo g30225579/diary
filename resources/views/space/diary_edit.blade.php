@@ -2,6 +2,12 @@
 
 @section('title', '写记事')
 
+@section('style')
+    <style>
+        .layui-form-pane .layui-form-checkbox{margin:0;margin-right:10px;margin-top:2px;margin-bottom:2px}
+    </style>
+@endsection
+
 @section('content')
     <div class="layui-fluid diary_edit">
         <div class="layui-row">
@@ -9,6 +15,14 @@
                 <div class="layui-form-item layui-form-text">
                     <div class="layui-input-block">
                         <input type="text" name="title" value="{{data_get($diary,'title')}}" placeholder="标题" required  lay-verify="required" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <div style="display:flex;align-items:center;flex-wrap:wrap">
+                        @foreach($tagMap as $tag=>$tagCount)
+                            <input type="checkbox" name="tags[]" title="{{$tag}}" value="{{$tag}}" lay-skin="tag" @if(in_array($tag,$diaryTags)) checked @endif />
+                        @endforeach
+                        <input type="text" name="tag_str" placeholder="自定义标签，多个逗号分隔" class="layui-input" style="max-width:200px;" />
                     </div>
                 </div>
                 <div class="layui-form-item layui-form-text">
@@ -26,6 +40,7 @@
         </div>
     </div>
 @endsection
+
 @section('script')
     <script src="/static/lib/tinymce/tinymce.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/spark-md5@3.0.2/spark-md5.min.js"></script>

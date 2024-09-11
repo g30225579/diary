@@ -12,7 +12,14 @@
                             <div class="layui-timeline-content layui-text">
                                 <h3 class="layui-timeline-title"><a href="/space/diary/{{$v->id}}/view">{{$v->title}}</a></h3>
                                 <div class="sub_title">
-                                    <span class="time">{{$v->create_time}}</span>
+                                    <div style="display:flex;flex-wrap:wrap;">
+                                        <span class="time">{{$v->create_time}}</span>
+                                        <div style="margin-left:.4rem">
+                                            @foreach($v->tags as $tag)
+                                                <span class="layui-badge {{$tagMap[$tag]['badge']}}" style="transform:scale(.9)">{{$tag}}</span>
+                                            @endforeach
+                                        </div>
+                                    </div>
                                     <a href="/space/diary/{{$v->id}}/edit" class="layui-btn layui-btn-primary layui-border-red layui-btn-xs">编辑</a>
                                 </div>
                                 <p class="content">{{$v->content}}</p>

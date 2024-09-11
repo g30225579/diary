@@ -1,9 +1,9 @@
 <?php
 namespace App\Http\Controllers\Space;
 
-use App\Helpers\Aliyun\AliyunOss;
 use App\Helpers\StringUtils;
 use App\Http\Controllers\Controller;
+use App\Service\TagService;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\DB;
 
 class DiaryController extends Controller
 {
+    private $tagService;
+
+    public function __construct()
+    {
+        $this->tagService = new TagService();
+    }
+
     public function index()
     {
         $date = request()->input('date');
@@ -44,7 +51,7 @@ class DiaryController extends Controller
 
         $pageList = $builder->orderByDesc('create_time')->paginate(20);
 
-        collect($pageList->items())->map(function($v) use($nowYear){
+        collect($pageList->items())->map(function($v) use($nowYear,&$tags){
             if($nowYear == date('Y',$v->create_time)){
                 $v->create_time = date('m月d日 H:i',$v->create_time);
             } else{
@@ -53,11 +60,16 @@ class DiaryController extends Controller
 
             $v->content = StringUtils::getSummary($v->content, 100);
 
+            $v->tags = $this->tagService->getTagsByJsonStr($v->tags);
+
             return $v;
         });
 
+        $tagMap = $this->tagService->getTagMap();
+
         return view('space.diary', [
             'pageList' => $pageList,
+            'tagMap' => $tagMap,
             'tree' => $tree
         ]);
     }
@@ -111,6 +123,11 @@ class DiaryController extends Controller
     {
         $diary = DB::table('diary')->where('user_id', auth()->id())->where('id', $id)->first();
 
+        $tagMap = [];
+        foreach($this->tagService->getTagsByJsonStr($diary->tags) as $tag){
+            $tagMap[$tag] = $this->tagService->getTagBadge($tag);
+        }
+
         //上一篇
         $last = DB::table('diary')->where('user_id',auth()->id())->where('create_time','<',$diary->create_time)->orderByDesc('create_time')->first();
         //下一篇
@@ -118,6 +135,7 @@ class DiaryController extends Controller
 
         return view('space.diary_view', [
             'diary' => $diary,
+            'tagMap' => $tagMap,
             'last' => $last,
             'next' => $next
         ]);
@@ -128,11 +146,15 @@ class DiaryController extends Controller
      */
     public function create()
     {
+        $tagMap = array_slice($this->tagService->getTagMap(),0,30);
+
         return view('space.diary_edit',[
             'diary' => null,
             'pageData' => [
                 'formAction' => '/space/diary/store',
             ],
+            'tagMap' => $tagMap,
+            'diaryTags' => []
         ]);
     }
 
@@ -141,13 +163,24 @@ class DiaryController extends Controller
      */
     public function edit(int $id)
     {
+        $tagMap = array_slice($this->tagService->getTagMap(),0,30);
+
         $diary = DB::table('diary')->where('user_id', auth()->id())->where('id', $id)->first();
+
+        $diaryTags = $this->tagService->getTagsByJsonStr($diary->tags);
+        foreach($diaryTags as $tag){
+            if(!array_key_exists($tag,$tagMap)){
+                $tagMap[$tag] = 1;
+            }
+        }
 
         return view('space.diary_edit',[
             'diary' => $diary,
             'pageData' => [
                 'formAction' => '/space/diary/'.$diary->id.'/update',
             ],
+            'tagMap' => array_slice($this->tagService->getTagMap(),0,30),
+            'diaryTags' => $diaryTags,
         ]);
     }
 
@@ -158,6 +191,14 @@ class DiaryController extends Controller
     {
         $title = request()->input('title');
         $content = request()->input('content');
+        $tags = request()->input('tags',[]);
+        $tagStr = request()->input('tag_str');
+
+        //日志标签（中文逗号转为英文逗号）
+        if($tagStr){
+            $tagStr = str_replace('，',',',$tagStr);
+            $tags = array_unique(array_merge($tags,explode(TagService::SEPARATOR,$tagStr)));
+        }
 
         if(!$title){
             $title = '无标题';
@@ -167,6 +208,7 @@ class DiaryController extends Controller
             DB::table('diary')->where('user_id', auth()->id())->where('id', $id)->update([
                 'title' => $title,
                 'content' => $content,
+                'tags' => json_encode($tags),
                 'update_time' => time()
             ]);
         } else{
@@ -174,10 +216,14 @@ class DiaryController extends Controller
                 'user_id' => auth()->id(),
                 'title' => $title,
                 'content' => $content,
+                'tags' => json_encode($tags),
                 'create_time' => time(),
                 'update_time' => time()
             ]);
         }
+
+        //保存日志后清理标签缓存
+        $this->tagService->tagMapClear();
 
         return redirect('/space/diary/'.$id.'/view');
     }

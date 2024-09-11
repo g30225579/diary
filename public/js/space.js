@@ -5,6 +5,11 @@ function loadTinymceEditor(cls, uploadType, options){
     if(typeof cls == 'undefined') return;
     if(typeof uploadType == 'undefined') uploadType = 'default';
 
+    let toolbar = [
+        'undo redo | restoredraft | alignleft aligncenter alignright alignjustify |  outdent indent | ltr rtl',
+        'code | link | image | media  | blockquote | forecolor backcolor',
+    ].join(' | ');
+
     let initParams = {
         selector: '.'+cls,
         language:'zh_CN',
@@ -12,10 +17,7 @@ function loadTinymceEditor(cls, uploadType, options){
         menubar: false,
         statusbar: false,
         plugins: 'image, media, code, link, autosave',
-        toolbar: [
-            'undo redo | restoredraft | outdent indent | alignleft aligncenter alignright alignjustify | ltr rtl',
-            'code | link | image | media  | blockquote | forecolor backcolor',
-        ],
+        toolbar: toolbar,
         mobile: {
             toolbar_drawer: false
         },
