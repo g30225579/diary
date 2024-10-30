@@ -167,19 +167,15 @@ class DiaryController extends Controller
 
         $diary = DB::table('diary')->where('user_id', auth()->id())->where('id', $id)->first();
 
+        //当前标签放置最前
         $diaryTags = $this->tagService->getTagsByJsonStr($diary->tags);
-        foreach($diaryTags as $tag){
-            if(!array_key_exists($tag,$tagMap)){
-                $tagMap[$tag] = 1;
-            }
-        }
 
         return view('space.diary_edit',[
             'diary' => $diary,
             'pageData' => [
                 'formAction' => '/space/diary/'.$diary->id.'/update',
             ],
-            'tagMap' => array_slice($this->tagService->getTagMap(),0,30),
+            'tagMap' => $tagMap,
             'diaryTags' => $diaryTags,
         ]);
     }

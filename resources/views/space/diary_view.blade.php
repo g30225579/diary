@@ -6,7 +6,7 @@
     <div class="layui-fluid diary_home_list diary_view">
         <div class="layui-row">
             <h1 class="title"><div><i class="layui-icon layui-icon-note"></i> {{$diary->title}}</div></h1>
-            <div class="sub_title">
+            <div class="sub_title layui-text">
                 <div style="display:flex;flex-wrap:wrap;">
                     <div>
                         <span class="time">创建 {{date('Y年m月d日 H:i', $diary->create_time)}}</span>

@@ -19,8 +19,13 @@
                 </div>
                 <div class="layui-form-item layui-form-text">
                     <div style="display:flex;align-items:center;flex-wrap:wrap">
-                        @foreach($tagMap as $tag=>$tagCount)
-                            <input type="checkbox" name="tags[]" title="{{$tag}}" value="{{$tag}}" lay-skin="tag" @if(in_array($tag,$diaryTags)) checked @endif />
+                        @foreach($diaryTags as $tag)
+                            <input type="checkbox" name="tags[]" title="{{$tag}}" value="{{$tag}}" lay-skin="tag" checked />
+                        @endforeach
+                        @foreach($tagMap as $tag=>$value)
+                            @if(!in_array($tag,$diaryTags))
+                                <input type="checkbox" name="tags[]" title="{{$tag}}" value="{{$tag}}" lay-skin="tag" />
+                            @endif
                         @endforeach
                         <input type="text" name="tag_str" placeholder="自定义标签，多个逗号分隔" class="layui-input" style="max-width:200px;" />
                     </div>

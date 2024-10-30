@@ -20,7 +20,7 @@ body{max-width:1200px;margin:0 auto}
 .diary_home_list .pagination{display:flex;justify-content:flex-end;margin-right:2rem}
 .diary_home_list .layui-timeline{margin-right:1.6rem;}
 .diary_home_list .layui-timeline-title{display:flex;font-size:1rem}
-.diary_home_list .sub_title{margin-bottom:.3rem;color:#aaa;display:flex;justify-content:space-between;align-items:center}
+.diary_home_list .sub_title{color:#aaa;display:flex;justify-content:space-between;align-items:center}
 .diary_home_list .content{color:#333}
 .diary_home_list .item_foot{margin:.4rem 0}
 .diary_home_list .main_right .layui-bg-gray{padding:1.2rem}
@@ -28,7 +28,6 @@ body{max-width:1200px;margin:0 auto}
 /* diary view */
 .diary_view{margin:0 .4rem;}
 .diary_view .title{display:flex;flex-wrap:wrap;font-size:1.2rem;margin:2rem 0 1rem;}
-.diary_view .sub_title{justify-content:space-between}
 .diary_view .layui-panel{margin-top:.8rem}
 .diary_view .content{padding:1rem;font-size:.9rem;}
 .diary_view .content p{margin:revert}
